@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Para ti 🌷</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --vino:#3a0f26; --rosa:#ff5d8f; --petalo:#ffc2d4; --lila:#c9a7ff; --luz:#fff0f5;
+    --serif:'Caveat','Segoe Script','Comic Sans MS',cursive;
+    --sans:'Nunito',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0}
+  html,body{height:100%}
+  body{
+    background:radial-gradient(circle at 50% 30%,#5a1a3a 0%,var(--vino) 70%);
+    color:var(--luz);font-family:var(--sans);overflow:hidden;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    padding:env(safe-area-inset-top) 1rem env(safe-area-inset-bottom);
+  }
+  .etapa{display:none;flex-direction:column;align-items:center;gap:1.2rem;max-width:560px;width:100%;position:relative;z-index:2}
+  .etapa.activa{display:flex;animation:entra .9s ease both}
+  @keyframes entra{from{opacity:0}to{opacity:1}}
+  h1,h2{font-family:var(--serif);font-weight:700;line-height:1.05}
+  h1{font-size:clamp(3rem,13vw,5.5rem)}
+  h2{font-size:clamp(2.4rem,10vw,4rem)}
+  p{font-size:1.1rem;opacity:.85}
+
+  /* Etapa 1: decoración */
+  .flor{position:fixed;top:-10%;font-size:1.6rem;opacity:.8;animation:cae linear infinite;pointer-events:none;z-index:1}
+  @keyframes cae{to{transform:translateY(120vh) rotate(360deg)}}
+  #decor .linea{width:90px;height:3px;background:var(--petalo);border-radius:3px;opacity:.6}
+
+  /* Etapa 2: corazón */
+  #corazon{width:min(62vw,260px);filter:drop-shadow(0 0 24px rgba(255,93,143,.45))}
+  #pct{font-family:var(--serif);font-size:2.4rem;color:var(--petalo)}
+
+  /* Etapa 3: pregunta */
+  .botones{display:flex;align-items:center;justify-content:center;gap:1.2rem;flex-wrap:wrap;min-height:120px}
+  button{
+    font-family:var(--sans);font-weight:700;border:0;border-radius:999px;cursor:pointer;
+    padding:.9rem 2rem;font-size:1.15rem;transition:transform .25s ease, opacity .25s;
+  }
+  button:focus-visible{outline:3px solid var(--lila);outline-offset:3px}
+  #si{background:var(--rosa);color:#fff;box-shadow:0 8px 24px rgba(255,93,143,.4)}
+  #no{background:transparent;color:var(--petalo);border:2px solid var(--petalo)}
+  #frase{min-height:2.2rem;font-family:var(--serif);font-size:1.9rem;color:var(--petalo)}
+
+  /* Final */
+  #final{text-shadow:0 2px 12px rgba(58,15,38,.9)}
+  .lluvia{position:fixed;top:-8%;pointer-events:none;z-index:3;animation:cae linear forwards}
+  .teamo{
+    position:fixed;z-index:1;pointer-events:none;white-space:nowrap;
+    font-family:var(--serif);font-weight:700;color:var(--petalo);
+    transform:translateX(-50%);opacity:0;animation:flota 7s ease-in-out infinite;
+  }
+  @keyframes flota{
+    0%{opacity:0;transform:translate(-50%,20px)}
+    25%,70%{opacity:.7}
+    100%{opacity:0;transform:translate(-50%,-30px)}
+  }
+  @media (prefers-reduced-motion:reduce){.flor,.lluvia{animation-duration:30s!important}}
+</style>
+</head>
+<body>
+
+<!-- Etapa 1: parece una página decorativa -->
+<section id="decor" class="etapa activa">
+  <h1>Para alguien especial 🌷</h1>
+  <div class="linea"></div>
+  <p>Un jardincito de flores hecho con cariño. Quédate un momentico…</p>
+</section>
+
+<!-- Etapa 2: carga -->
+<section id="carga" class="etapa">
+  <h2>Llenando el corazón de <span class="firma-n"></span>…</h2>
+  <svg id="corazon" viewBox="0 0 100 90" aria-hidden="true">
+    <defs>
+      <clipPath id="recorte"><rect id="nivel" x="0" y="90" width="100" height="90"/></clipPath>
+    </defs>
+    <path d="M50 85C10 55 0 30 0 20 0 8 10 0 22 0c12 0 22 8 28 18C56 8 66 0 78 0c12 0 22 8 22 20 0 10-10 35-50 65z" fill="none" stroke="#ffc2d4" stroke-width="2.5"/>
+    <path d="M50 85C10 55 0 30 0 20 0 8 10 0 22 0c12 0 22 8 28 18C56 8 66 0 78 0c12 0 22 8 22 20 0 10-10 35-50 65z" fill="#ff5d8f" clip-path="url(#recorte)"/>
+  </svg>
+  <div id="pct">0%</div>
+</section>
+
+<!-- Etapa 3: la pregunta -->
+<section id="pregunta" class="etapa">
+  <h2 id="titulo"></h2>
+  <div id="frase"></div>
+  <div class="botones">
+    <button id="si">Sí 💖</button>
+    <button id="no">No</button>
+  </div>
+</section>
+
+<!-- Etapa 4: respuesta -->
+<section id="final" class="etapa">
+  <h1>¡Sí! 🥹💖</h1>
+  <p>Me hiciste el día (y la vida). Prometo cuidarte mucho.</p>
+  <p style="font-family:var(--serif);font-size:2rem;opacity:1;color:var(--petalo)">— <span class="firma-n"></span></p>
+</section>
+
+<script>
+  // ====== EDITA ESTO ======
+  const FIRMA  = "Nico";          // tu nombre (carga y firma final)
+  const ELLA   = "";              // nombre de ella (si lo dejas vacío, no lo muestra)
+  const SEGUNDOS_DECORACION = 6;  // cuánto dura la página "de decoración"
+  const SEGUNDOS_CARGA = 20;      // cuánto tarda en llenarse el corazón (más número = más lento)
+  const MENSAJES_NO = [
+    "¿Segura? 🥺",
+    "Piénsalo bien…",
+    "¿De verdad de verdad?",
+    "Mira que me pongo tristeee",
+    "¿Te arrepientes? Aún estás a tiempo 💔",
+    "Última oportunidad…",
+    "Ya sé que quieres decir que sí 😌"
+  ];
+  const TE_AMO = [
+    "Te amo", "I love you", "Je t'aime", "Ti amo", "Eu te amo", "Ich liebe dich",
+    "愛してる", "사랑해", "我爱你", "Я тебя люблю", "أحبك", "मैं तुमसे प्यार करता हूँ",
+    "Seni seviyorum", "Σ' αγαπώ", "Ik hou van je", "Jag älskar dig", "Kocham cię",
+    "T'estimo", "Maite zaitut", "Quérote", "אני אוהב אותך", "ฉันรักเธอ", "Anh yêu em",
+    "Aku cinta kamu", "Nakupenda", "Aloha au iā ʻoe", "Te iubesc", "Я тебе кохаю",
+    "Miluji tě", "Szeretlek", "Rakastan sinua", "Jeg elsker deg", "Jeg elsker dig",
+    "Mahal kita", "Munayki", "Rohayhu"
+  ];
+  // ========================
+
+  const $ = id => document.getElementById(id);
+  document.querySelectorAll('.firma-n').forEach(e => e.textContent = FIRMA);
+  $('titulo').textContent = (ELLA ? ELLA + ', ' : '') + (ELLA ? '¿quieres' : '¿Quieres') + ' ser mi novia? 💌';
+
+  const mostrar = id => {
+    document.querySelectorAll('.etapa').forEach(e => e.classList.remove('activa'));
+    $(id).classList.add('activa');
+  };
+
+  // Flores cayendo (decoración)
+  const flores = ['🌸','🌷','🌺','🌼','💮'];
+  for (let i = 0; i < 22; i++) {
+    const f = document.createElement('div');
+    f.className = 'flor';
+    f.textContent = flores[i % flores.length];
+    f.style.left = Math.random() * 100 + 'vw';
+    f.style.animationDuration = (8 + Math.random() * 8) + 's';
+    f.style.animationDelay = (-Math.random() * 12) + 's';
+    f.style.fontSize = (1 + Math.random() * 1.4) + 'rem';
+    document.body.appendChild(f);
+  }
+
+  // Etapa 1 -> 2
+  setTimeout(() => { mostrar('carga'); llenarCorazon(); }, SEGUNDOS_DECORACION * 1000);
+
+  function llenarCorazon() {
+    const inicio = performance.now(), dur = SEGUNDOS_CARGA * 1000;
+    (function paso(t) {
+      const p = Math.min((t - inicio) / dur, 1);
+      $('nivel').setAttribute('y', 90 - 90 * p);
+      $('pct').textContent = Math.round(p * 100) + '%';
+      if (p < 1) requestAnimationFrame(paso);
+      else setTimeout(() => mostrar('pregunta'), 900);
+    })(inicio);
+  }
+
+  // Etapa 3: botón No travieso
+  let intentos = 0;
+  $('no').addEventListener('click', () => {
+    if (intentos >= MENSAJES_NO.length) return aceptar();
+    $('frase').textContent = MENSAJES_NO[intentos];
+    intentos++;
+    $('si').style.transform = `scale(${1 + intentos * 0.28})`;
+    $('no').style.transform = `scale(${Math.max(1 - intentos * 0.1, 0.5)})`;
+    if (intentos >= MENSAJES_NO.length) $('no').textContent = 'Bueno, sí 🙈';
+  });
+  $('si').addEventListener('click', aceptar);
+
+  function aceptar() {
+    mostrar('final');
+
+    // Lluvia de corazones
+    const corazones = ['💖','💕','💗','🌷','✨'];
+    for (let i = 0; i < 40; i++) {
+      const c = document.createElement('div');
+      c.className = 'lluvia';
+      c.textContent = corazones[i % corazones.length];
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.fontSize = (1.2 + Math.random() * 1.8) + 'rem';
+      c.style.animationDuration = (3 + Math.random() * 4) + 's';
+      c.style.animationDelay = (Math.random() * 2.5) + 's';
+      document.body.appendChild(c);
+    }
+
+    // "Te amo" en todos los idiomas, flotando por la pantalla
+    TE_AMO.forEach((texto, i) => {
+      const t = document.createElement('div');
+      t.className = 'teamo';
+      t.textContent = texto;
+      t.style.left = (22 + Math.random() * 56) + 'vw';
+      t.style.top = ((i + Math.random() * 0.8) * (92 / TE_AMO.length)) + 'vh';
+      t.style.fontSize = (1.3 + Math.random() * 1) + 'rem';
+      t.style.animationDelay = (Math.random() * 7) + 's';
+      t.style.animationDuration = (6 + Math.random() * 4) + 's';
+      document.body.appendChild(t);
+    });
+  }
+</script>
+</body>
+</html>
